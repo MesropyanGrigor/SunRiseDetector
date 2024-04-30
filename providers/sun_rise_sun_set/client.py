@@ -11,7 +11,7 @@ class SunRiseInfo(object):
 
 class SunRiseClient(object):
 
-    time_format = '%I:%M:%S %p'
+    time_format = "%I:%M:%S %p"
 
     def __init__(self, url):
         self._client = httpx.AsyncClient(base_url=url)

@@ -12,7 +12,8 @@ logger = logging.getLogger("SUN RISE")
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
-format = '%I:%M %p'
+format = "%I:%M %p"
+
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -42,7 +43,9 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
     return args
 
 
-async def find_when_will_be_the_sun_rise(sun_rise_time: datetime.datetime, country: str) -> None:
+async def find_when_will_be_the_sun_rise(
+    sun_rise_time: datetime.datetime, country: str
+) -> None:
     url = "https://api.sunrisesunset.io"
     sun_rise_client = SunRiseClient(url)
     country_coordinates_client = CountryCoordinatesClient(
@@ -62,7 +65,9 @@ async def find_when_will_be_the_sun_rise(sun_rise_time: datetime.datetime, count
             coordinates[1],
             str(today + datetime.timedelta(day)),
         )
-        result_sun_rise_time = datetime.datetime.strptime(result.sun_rise_time, sun_rise_client.time_format)
+        result_sun_rise_time = datetime.datetime.strptime(
+            result.sun_rise_time, sun_rise_client.time_format
+        )
         result_sun_rise_time = result_sun_rise_time.replace(second=0)
 
         if result_sun_rise_time == sun_rise_time:
