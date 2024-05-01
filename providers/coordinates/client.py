@@ -13,8 +13,3 @@ class CountryCoordinatesClient(object):
     def get(self, city_name: str) -> tuple[str, str] | None:
         coordinates = self._city_coordinates.get(city_name.lower())
         return coordinates
-
-
-# country_coordinates = CountryCoordinates()
-
-# print(country_coordinates.get("paris"))

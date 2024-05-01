@@ -8,7 +8,7 @@ from collections.abc import Sequence
 
 import handlers
 from providers.coordinates.client import CountryCoordinatesClient
-from providers.sun_rise_sun_set.client import SunRiseClient
+from providers.sunrise.client import SunRiseClient
 
 logger = logging.getLogger("SUN RISE")
 logging.basicConfig(level=logging.INFO)
