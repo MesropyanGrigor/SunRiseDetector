@@ -2,9 +2,11 @@ import argparse
 import asyncio
 import datetime
 import logging
+import signal
 import sys
 from collections.abc import Sequence
 
+import handlers
 from providers.coordinates.client import CountryCoordinatesClient
 from providers.sun_rise_sun_set.client import SunRiseClient
 
@@ -38,6 +40,7 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         sun_rise_time = datetime.datetime.strptime(args.sun_rise_time, format)
         args.sun_rise_time = sun_rise_time
     except ValueError:
+        logger.error(" --sun_rise_time option is given in wrong format")
         parser.print_usage()
         sys.exit(1)
     return args
@@ -83,6 +86,8 @@ async def find_when_will_be_the_sun_rise(
 
 
 if __name__ == "__main__":
+    signal.signal(signal.SIGTERM, handlers.sig_term_handler)
+    signal.signal(signal.SIGABRT, handlers.sig_abort_handler)
     args = parse_args(sys.argv[1:])
     asyncio.run(
         find_when_will_be_the_sun_rise(

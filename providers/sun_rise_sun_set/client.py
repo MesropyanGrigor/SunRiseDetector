@@ -1,3 +1,5 @@
+import os
+import signal
 from dataclasses import dataclass
 
 import httpx
@@ -22,14 +24,22 @@ class SunRiseClient(object):
         longitude,
         date,
     ) -> SunRiseInfo:
-        response = await self._client.get(
-            url="json",
-            params={
-                "lat": latitude,
-                "lng": longitude,
-                "date": date,
-            },
-        )
+        try:
+            response = await self._client.get(
+                url="json",
+                params={
+                    "lat": latitude,
+                    "lng": longitude,
+                    "date": date,
+                },
+            )
+        except httpx.ConnectError:
+            os.kill(os.getpid(), signal.SIGTERM)
+        try:
+            response.raise_for_status()
+        except httpx.HTTPStatusError:
+            os.kill(os.getpid(), signal.SIGABRT)
+
         response_data = response.json()
         return SunRiseInfo(
             sun_rise_time=response_data["results"]["sunrise"],

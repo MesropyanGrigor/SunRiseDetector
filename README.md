@@ -23,7 +23,10 @@ Your script must correctly utilize this API, incorporating necessary parameters 
 - Clarity of Variable Names: Are variable names intuitive and clear, making the code easier to understand even for someone without a deep programming background?
 
 
-**Solution**
+#### **Dependencies**
+- httpx
 
-- an endpoint similar like this /country/{paris}/sun-rise/{date}
-- an endpoint similar like this /coordinates?longitude=12&latitude=24
+#### Run example of the program
+```commandline
+python3 ./run.py --country Paris --sun_rise_time "6:00 AM"
+```
